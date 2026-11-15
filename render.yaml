@@ -1,0 +1,14 @@
+# One-click deploy on Render (free tier): push this folder to GitHub, then
+# https://dashboard.render.com -> New -> Blueprint -> pick the repo.
+services:
+  - type: web
+    name: terratrend-ai
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: FIRMS_MAP_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
