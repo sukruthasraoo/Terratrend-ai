@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TerraTrend AI — Investigate. Analyze. Discover.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/styles.css">
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Cesium.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+</head>
+<body>
+<div id="globe"></div>
+<div id="atmo"></div>
+
+<header class="topbar">
+  <div class="brand"><strong>Terra<em>Trend</em> AI</strong><span>Investigate. Analyze. Discover.</span></div>
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Search a country, state, city, region, or type lat, lon" autocomplete="off" aria-label="Search location">
+    <div id="results" class="results" role="listbox"></div>
+  </div>
+  <div class="status">
+    <span class="ctx" id="ctx">No location selected</span>
+    <span id="fresh" title="Data freshness"><span class="dot off"></span>freshness</span>
+    <span id="aiflag"><span class="dot off"></span>AI</span>
+  </div>
+</header>
+
+<nav class="nav" id="nav" aria-label="Sections">
+  <button data-view="explorer" aria-current="page">Earth Explorer</button>
+  <button data-view="live">Live Monitor</button>
+  <button data-view="intel">Environmental Intelligence</button>
+  <button data-view="trends">Trends & Anomalies</button>
+  <button data-view="ai">AI Investigation</button>
+  <button data-view="compare">Regional Comparison</button>
+  <button data-view="datasets">Dataset Explorer</button>
+  <button data-view="reports">Reports & Evidence</button>
+</nav>
+
+<div class="welcome" id="welcome"><h1>Where on Earth?</h1><p>Search a place or click the globe to start an investigation.</p></div>
+
+<aside class="panel left" id="p-left" aria-label="Location explorer">
+  <h2>Location <span id="loc-type"></span></h2>
+  <div class="body" id="loc-body"><p class="muted">Search above, or click anywhere on the globe to select a point. Cities and states are resolved to their administrative boundary.</p>
+    <div class="field"><label>Coordinates</label><div class="row"><input id="lat" placeholder="lat" inputmode="decimal"><input id="lon" placeholder="lon" inputmode="decimal"><button class="btn small" id="go-coords">Go</button></div></div>
+    <div class="field"><label>Recent investigations</label><div id="recent" class="muted">None yet</div></div>
+  </div>
+</aside>
+<aside class="panel right" id="p-right" aria-label="Environmental layers">
+  <h2>Imagery layers <span>NASA GIBS</span></h2>
+  <div class="body" id="layers"></div>
+</aside>
+<div class="legend" id="legend">Imagery: NASA GIBS WMTS · tiles load on demand</div>
+<section class="panel bottom" id="p-bottom" aria-label="Timeline">
+  <div class="timeline">
+    <div class="meta"><span>Imagery date <b id="tdate"></b></span><span id="tnote" class="muted">Daily layers show the selected date; data products lag real time by hours to weeks.</span>
+      <span><button class="btn small" id="tprev">◀</button> <button class="btn small" id="tplay">Play</button> <button class="btn small" id="tnext">▶</button>
+      <select id="tspeed" class="btn small"><option value="1">1 d/step</option><option value="7">7 d/step</option><option value="30">30 d/step</option><option value="365">1 y/step</option></select></span></div>
+    <input type="range" id="tslider" min="0" max="100" value="100" aria-label="Imagery date">
+  </div>
+</section>
+
+<section class="panel center hidden" id="p-center"><h2 id="center-title">—</h2><div class="body" id="center-body"></div></section>
+
+<div class="toast" id="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
